@@ -11,8 +11,8 @@ class Physics:
             field_dimensions,
             player_dimensions = [111, 111],
             slow_rate = 0.3,
-            acceleration_rate = 1,
-            max_speed = 15
+            acceleration_rate = 0.7,
+            max_speed = 30
     ):
         print('Physics module initiated')
         self.dimensions = list(field_dimensions)
@@ -44,10 +44,10 @@ class Physics:
         return self.speed
 
     def update_speed(self, shift):
-        self.speed[0] = self.resolve_delta(self.speed[0], shift[0])
-        self.speed[1] = self.resolve_delta(self.speed[1], shift[1])
+        self.speed[0] = self.resolve_delta(self.speed[0], shift[0], 0)
+        self.speed[1] = self.resolve_delta(self.speed[1], shift[1], 1)
 
-    def resolve_delta(self, was, delta):
+    def resolve_delta(self, was, delta, current_coord):
         if (was == 0 and delta == 0): return 0
 
         if (delta != 0):
@@ -58,18 +58,23 @@ class Physics:
         if (was < 0):
             return was + self.slow_rate
         else:
-           return was - self.slow_rate
+            if (current_coord == 1):
+                return was + self.slow_rate * 1.5
+            else:
+                return was - self.slow_rate
 
     def resolve_collision(self, speed, pos):
-        speed[0] = self.stop_if_collide(speed[0], self.dimensions[0], pos[0], self.player_dimensions[0])
-        speed[1] = self.stop_if_collide(speed[1], self.dimensions[1], pos[1], self.player_dimensions[1])
+        speed[0] = self.stop_if_collide(speed[0], self.dimensions[0], pos[0], self.player_dimensions[0], 0)
+        speed[1] = self.stop_if_collide(speed[1], self.dimensions[1], pos[1], self.player_dimensions[1], 1)
         return speed
 
-    def stop_if_collide(self, speed, max, pos, player_size):
+    def stop_if_collide(self, speed, max, pos, player_size, current_coord):
         if (pos + speed > max - player_size):
             print('collision with max value')
+            self.speed[current_coord] = self.speed[current_coord] * 0.5
             return max - player_size - pos
         if (pos + speed < 0):
             print('collision with min value')
+            self.speed[current_coord] = self.speed[current_coord] * 0.5
             return -pos
         return speed
