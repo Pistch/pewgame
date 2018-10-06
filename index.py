@@ -1,10 +1,28 @@
 import sys, pygame, time
+
 pygame.init()
 
 size = width, height = 800, 600
-speed = [1, 1]
 black = 0, 0, 0
-fps = 10
+fps = 200
+
+
+def get_speed():
+    keys_pressed = pygame.key.get_pressed()
+    speed = [0, 0]
+    if keys_pressed[pygame.K_w]:
+        speed[0] = speed[0] + 1
+
+    if keys_pressed[pygame.K_s]:
+        speed[0] = speed[0] - 1
+
+    if keys_pressed[pygame.K_a]:
+        speed[1] = speed[1] - 1
+
+    if keys_pressed[pygame.K_d]:
+        speed[1] = speed[1] + 1
+
+    return speed
 
 screen = pygame.display.set_mode(size)
 
@@ -22,11 +40,7 @@ while 1:
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
 
-    ballrect = ballrect.move(speed)
-    if ballrect.left < 0 or ballrect.right > width:
-        speed[0] = -speed[0]
-    if ballrect.top < 0 or ballrect.bottom > height:
-        speed[1] = -speed[1]
+    ballrect = ballrect.move(get_speed())
 
     screen.fill(black)
     screen.blit(ball, ballrect)
