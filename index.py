@@ -6,7 +6,7 @@ pygame.init()
 
 size = width, height = 800, 600
 black = 0, 0, 0
-fps = 200
+fps = 60
 
 physics = Physics(size)
 screen = pygame.display.set_mode(size)
