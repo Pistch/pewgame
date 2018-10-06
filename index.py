@@ -11,16 +11,28 @@ def get_speed():
     keys_pressed = pygame.key.get_pressed()
     speed = [0, 0]
     if keys_pressed[pygame.K_d]:
-        speed[0] = speed[0] + 1
+        if ballrect.right > width:
+            speed[0] = 0
+        else:
+            speed[0] = speed[0] + 1
 
     if keys_pressed[pygame.K_a]:
-        speed[0] = speed[0] - 1
+        if ballrect.left < 0:
+            speed[0] = 0
+        else:
+            speed[0] = speed[0] - 1
 
     if keys_pressed[pygame.K_s]:
-        speed[1] = speed[1] + 1
+        if ballrect.bottom > height:
+            speed[0] = 0
+        else:
+            speed[1] = speed[1] + 1
 
     if keys_pressed[pygame.K_w]:
-        speed[1] = speed[1] - 1
+        if ballrect.top < 0:
+            speed[1] = 0
+        else:
+            speed[1] = speed[1] - 1
 
     return speed
 
@@ -39,6 +51,7 @@ while 1:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
+
 
     ballrect = ballrect.move(get_speed())
 
