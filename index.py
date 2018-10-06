@@ -10,17 +10,17 @@ fps = 200
 def get_speed():
     keys_pressed = pygame.key.get_pressed()
     speed = [0, 0]
-    if keys_pressed[pygame.K_w]:
+    if keys_pressed[pygame.K_d]:
         speed[0] = speed[0] + 1
 
-    if keys_pressed[pygame.K_s]:
+    if keys_pressed[pygame.K_a]:
         speed[0] = speed[0] - 1
 
-    if keys_pressed[pygame.K_a]:
-        speed[1] = speed[1] - 1
-
-    if keys_pressed[pygame.K_d]:
+    if keys_pressed[pygame.K_s]:
         speed[1] = speed[1] + 1
+
+    if keys_pressed[pygame.K_w]:
+        speed[1] = speed[1] - 1
 
     return speed
 
