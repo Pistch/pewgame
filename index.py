@@ -4,17 +4,17 @@ pygame.init()
 size = width, height = 800, 600
 speed = [1, 1]
 black = 0, 0, 0
-fps = 60
+fps = 10
 
 screen = pygame.display.set_mode(size)
 
 ball = pygame.image.load("intro_ball.gif")
 ballrect = ball.get_rect()
-cur_time = time.clock()
+cur_time = time.time() * 1000
 
 while 1:
-    inner_cur_time = time.clock()
-    if (cur_time < inner_cur_time - (1000 / fps)):
+    inner_cur_time = time.time() * 1000
+    if (cur_time > inner_cur_time - (1000 / fps)):
         continue
 
     cur_time = inner_cur_time
